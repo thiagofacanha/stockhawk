@@ -75,10 +75,8 @@ public class DetailActivity extends AppCompatActivity {
 
             LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
             for (HistoricalQuote item : result) {
-                series.appendData(new DataPoint(item.getDate().getTimeInMillis(), item.getClose().doubleValue()), true, 10);
+                series.appendData(new DataPoint(item.getDate().getTimeInMillis(), item.getClose().doubleValue()), true,10);
             }
-            series.setColor(Color.GREEN);
-            series.setThickness(8);
             final SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd");
             graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
                 @Override
