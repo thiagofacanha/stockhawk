@@ -38,5 +38,9 @@
     <string name="show_list_percent">Showing in percentage</string>
     <string name="show_list_dollar">Showing in absolute value</string>
     <string name="no_data_available">No data Available</string>
+    <string name="error">Error message</string>
+    <string name="google_symbol" translatable="false">GOOG</string>
+    <string name="default_value_dolar" translatable="false">1000.00</string>
+    <string name="default_percent_value" translatable="false">100%</string>
 
 </resources>
