@@ -164,8 +164,15 @@ public final class QuoteSyncJob {
 
             scheduler.schedule(builder.build());
 
-
         }
+            updateWidgets(context);
+    }
+
+    private static void updateWidgets(Context context) {
+        // Setting the package ensures that only components in our app will receive the broadcast
+        Intent dataUpdatedIntent = new Intent(QuoteSyncJob.ACTION_DATA_UPDATED)
+                .setPackage(context.getPackageName());
+        context.sendBroadcast(dataUpdatedIntent);
     }
 
 

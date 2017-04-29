@@ -37,5 +37,6 @@
     <string name="no_content_available_please_refresh_your_data_when_connected">No content available. Please refresh your data when connected!</string>
     <string name="show_list_percent">Showing in percentage</string>
     <string name="show_list_dollar">Showing in absolute value</string>
+    <string name="no_data_available">No data Available</string>
 
 </resources>
