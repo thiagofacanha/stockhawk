@@ -12,10 +12,10 @@
     <string name="pref_display_mode_absolute_key">absolute</string>
     <string name="pref_display_mode_percentage_key">percentage</string>
 
-    <string name="default_stocks_yahoo">YHOO</string>
-    <string name="default_stocks_apple">AAPL</string>
-    <string name="default_stocks_microsoft">MSFT</string>
-    <string name="default_stocks_facebook">FB</string>
+    <string name="default_stocks_yahoo" translatable="false">YHOO</string>
+    <string name="default_stocks_apple" translatable="false">AAPL</string>
+    <string name="default_stocks_microsoft" translatable="false">MSFT</string>
+    <string name="default_stocks_facebook" translatable="false">FB</string>
 
 
     <string name="action_change_units">@string/pref_display_mode_key</string>
@@ -31,5 +31,12 @@
 
     <string name="toast_stock_added_no_connectivity">Symbol %s added. Will refresh when network available.</string>
     <string name="toast_no_connectivity">Will refresh when network available.</string>
+    <string name="error_getting_stock">Error getting info about this stock. Is the code right?</string>
+    <string name="no_network_available">No network available. Please check your connection.</string>
+    <string name="add_a_new_stock">Add a new stock</string>
+    <string name="no_content_available_please_refresh_your_data_when_connected">No content available. Please refresh your data when connected!</string>
+    <string name="show_list_percent">Showing in percentage</string>
+    <string name="show_list_dollar">Showing in absolute value</string>
+    <string name="no_data_available">No data Available</string>
 
 </resources>
