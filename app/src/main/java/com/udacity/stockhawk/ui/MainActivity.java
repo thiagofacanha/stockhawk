@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -20,7 +21,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract;
@@ -111,7 +111,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             error.setVisibility(View.VISIBLE);
         } else if (!networkUp()) {
             swipeRefreshLayout.setRefreshing(false);
-            Toast.makeText(this, R.string.toast_no_connectivity, Toast.LENGTH_LONG).show();
+            Snackbar snackbar = Snackbar
+                    .make(findViewById(android.R.id.content),  R.string.toast_no_connectivity, Snackbar.LENGTH_LONG);
+            snackbar.show();
         } else if (PrefUtils.getStocks(this).size() == 0) {
             swipeRefreshLayout.setRefreshing(false);
             error.setText(getString(R.string.error_no_stocks));
@@ -209,9 +211,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         protected void onPostExecute(final Boolean result) {
             if (!networkUp()) {
-                Toast.makeText(MainActivity.this, R.string.no_network_available, Toast.LENGTH_LONG).show();
+                Snackbar snackbar = Snackbar
+                        .make(findViewById(android.R.id.content),   R.string.no_network_available, Snackbar.LENGTH_LONG);
+                snackbar.show();
             } else if (!result) {
-                Toast.makeText(MainActivity.this, R.string.error_getting_stock, Toast.LENGTH_LONG).show();
+                Snackbar snackbar = Snackbar
+                        .make(findViewById(android.R.id.content),   R.string.error_getting_stock, Snackbar.LENGTH_LONG);
+                snackbar.show();
             } else {
                 swipeRefreshLayout.setRefreshing(true);
                 PrefUtils.addStock(MainActivity.this, symbol);

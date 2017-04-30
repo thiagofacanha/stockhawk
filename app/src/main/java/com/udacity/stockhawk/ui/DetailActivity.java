@@ -1,9 +1,11 @@
 package com.udacity.stockhawk.ui;
 
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.jjoe64.graphview.DefaultLabelFormatter;
@@ -13,6 +15,7 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import com.udacity.stockhawk.R;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.List;
@@ -47,7 +50,7 @@ public class DetailActivity extends AppCompatActivity {
         private String symbol;
 
         protected List<HistoricalQuote> doInBackground(String... symbols) {
-            List<HistoricalQuote> histQuotes = null;
+            List<HistoricalQuote> histQuotes = new ArrayList<>();
             try {
                 symbol = symbols[0];
                 Calendar fromCalendar = Calendar.getInstance();
@@ -55,16 +58,21 @@ public class DetailActivity extends AppCompatActivity {
                 fromCalendar.add(Calendar.DAY_OF_MONTH, -7);
                 Stock stock = YahooFinance.get(symbol, fromCalendar, toCalendar, Interval.DAILY);
                 histQuotes = stock.getHistory();
+
                 histQuotes.sort(new Comparator<HistoricalQuote>() {
-                    @Override
-                    public int compare(HistoricalQuote historicalQuote, HistoricalQuote t1) {
-                        if (historicalQuote.getDate() == null || t1.getDate() == null) {
-                            return 0;
-                        }
-                        return historicalQuote.getDate().compareTo(t1.getDate());
-                    }
-                });
+                                    @Override
+                                    public int compare(HistoricalQuote historicalQuote, HistoricalQuote t1) {
+                                        if (historicalQuote.getDate() == null || t1.getDate() == null) {
+                                            return 0;
+                                        }
+                                        return historicalQuote.getDate().compareTo(t1.getDate());
+                                    }
+                                }
+                );
+
             } catch (Exception e) {
+                Log.e("myTag", " error getting histQuots " + histQuotes);
+
             }
             return histQuotes;
         }
@@ -75,7 +83,7 @@ public class DetailActivity extends AppCompatActivity {
 
             LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
             for (HistoricalQuote item : result) {
-                series.appendData(new DataPoint(item.getDate().getTimeInMillis(), item.getClose().doubleValue()), true,10);
+                series.appendData(new DataPoint(item.getDate().getTimeInMillis(), item.getClose().doubleValue()), true, 10);
             }
             final SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd");
             graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
@@ -91,6 +99,12 @@ public class DetailActivity extends AppCompatActivity {
                 }
             });
 
+            if(series.isEmpty()){
+                graph.setVisibility(View.GONE);
+                Snackbar snackbar = Snackbar
+                        .make(findViewById(android.R.id.content),  R.string.error_getting_history, Snackbar.LENGTH_LONG);
+                snackbar.show();
+            }
             graph.addSeries(series);
 
         }
